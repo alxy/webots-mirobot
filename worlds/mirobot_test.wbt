@@ -1,0 +1,82 @@
+#VRML_SIM R2020b utf8
+WorldInfo {
+  basicTimeStep 16
+  coordinateSystem "NUE"
+}
+Viewpoint {
+  orientation 0.016754406706759248 -0.9798498414448675 -0.19903160069791104 3.30618685179659
+  position 0.28174024132419195 0.9221456047046726 -1.3707375444441592
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+Floor {
+  size 1 1
+}
+WoodenBox {
+  translation 0.388422 0.05 0.380606
+  rotation 0 1 0 -0.785395307179586
+  size 0.1 0.1 0.1
+}
+WoodenBox {
+  translation 0.4129118357064282 0.04992151952783248 -0.09360520049604518
+  rotation -0.030185327565457866 1.689107936347631e-11 0.999544319177377 3.1415926524945905
+  name "wooden box(2)"
+  size 0.1 0.1 0.1
+  mass 0.2
+}
+WoodenBox {
+  translation -0.396681 0.05 -0.190526
+  rotation 0 1 0 0.693769
+  name "wooden box(1)"
+  size 0.1 0.1 0.1
+}
+Solid {
+  translation 0.0020985 0.05 -0.495944
+  children [
+    DEF WALL_GEOMETRY Shape {
+      appearance PBRAppearance {
+        baseColor 0 0 1
+        roughness 0.5
+        metalness 0
+      }
+      geometry Box {
+        size 1 0.1 0.01
+      }
+    }
+  ]
+  name "Wall"
+  boundingObject USE WALL_GEOMETRY
+}
+Solid {
+  translation 0.00277294 0.05 0.492781
+  rotation 0 1 0 3.14159
+  children [
+    USE WALL_GEOMETRY
+  ]
+  name "Wall(1)"
+  boundingObject USE WALL_GEOMETRY
+}
+Solid {
+  translation -0.492238 0.05 -0.00450913
+  rotation 0 1 0 -1.5707953071795862
+  children [
+    USE WALL_GEOMETRY
+  ]
+  name "Wall(3)"
+  boundingObject USE WALL_GEOMETRY
+}
+Solid {
+  translation 0.501346 0.05 0.00165469
+  rotation 0 1 0 -1.5707953071795862
+  children [
+    USE WALL_GEOMETRY
+  ]
+  name "Wall(2)"
+  boundingObject USE WALL_GEOMETRY
+}
+Mirobot {
+  controller "mirobot_default_controller"
+  supervisor TRUE
+}

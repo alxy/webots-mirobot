@@ -1,0 +1,213 @@
+#VRML_SIM R2020a utf8
+WorldInfo {
+  basicTimeStep 16
+}
+Viewpoint {
+  orientation -0.8260715125146183 -0.4945998507118529 -0.2701422660148233 1.1905653427594582
+  position -0.3968736202686856 1.401986745974622 1.0744668151225691
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+Floor {
+  size 1 1
+}
+FourWheelsRobot {
+}
+WoodenBox {
+  translation 0.388422 0.05 0.380606
+  rotation 0 1 0 -0.785395307179586
+  size 0.1 0.1 0.1
+}
+WoodenBox {
+  translation 0.4129118357064282 0.04992151952783248 -0.09360520049604518
+  rotation -0.030185327565457866 1.689107936347631e-11 0.999544319177377 3.1415926524945905
+  name "wooden box(2)"
+  size 0.1 0.1 0.1
+  mass 0.2
+}
+WoodenBox {
+  translation -0.396681 0.05 -0.190526
+  rotation 0 1 0 0.693769
+  name "wooden box(1)"
+  size 0.1 0.1 0.1
+}
+Solid {
+  translation 0.0020985 0.05 -0.495944
+  children [
+    DEF WALL_GEOMETRY Shape {
+      appearance PBRAppearance {
+        baseColor 0 0 1
+        roughness 0.5
+        metalness 0
+      }
+      geometry Box {
+        size 1 0.1 0.01
+      }
+    }
+  ]
+  name "Wall"
+  boundingObject USE WALL_GEOMETRY
+}
+Solid {
+  translation 0.00277294 0.05 0.492781
+  rotation 0 1 0 3.14159
+  children [
+    USE WALL_GEOMETRY
+  ]
+  name "Wall(1)"
+  boundingObject USE WALL_GEOMETRY
+}
+Solid {
+  translation -0.492238 0.05 -0.00450913
+  rotation 0 1 0 -1.5707953071795862
+  children [
+    USE WALL_GEOMETRY
+  ]
+  name "Wall(3)"
+  boundingObject USE WALL_GEOMETRY
+}
+Solid {
+  translation 0.501346 0.05 0.00165469
+  rotation 0 1 0 -1.5707953071795862
+  children [
+    USE WALL_GEOMETRY
+  ]
+  name "Wall(2)"
+  boundingObject USE WALL_GEOMETRY
+}
+Robot {
+  translation -0.246543 0.05 0.130396
+  children [
+    DEF BODY Shape {
+      appearance PBRAppearance {
+        baseColor 1 0 0
+        metalness 0
+      }
+      geometry Box {
+        size 0.1 0.05 0.2
+      }
+    }
+    DEF WHEEL1_JOINT HingeJoint {
+      jointParameters HingeJointParameters {
+        anchor 0.06 0 0.05
+      }
+      device [
+        RotationalMotor {
+          name "wheel1"
+        }
+      ]
+      endPoint DEF WHEEL1 Solid {
+        translation 0.06 0 0.05
+        rotation 0 0 1 1.5708
+        children [
+          DEF WHEEL Shape {
+            appearance PBRAppearance {
+              baseColor 0 1 0
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.02
+              radius 0.04
+            }
+          }
+        ]
+        name "solid(2)"
+        boundingObject USE WHEEL
+        physics DEF WHEEL_PH Physics {
+        }
+      }
+    }
+    DEF WHEEL2_JOINT HingeJoint {
+      jointParameters HingeJointParameters {
+        anchor -0.06 0 0.05
+      }
+      device [
+        RotationalMotor {
+          name "wheel2"
+        }
+      ]
+      endPoint DEF WHEEL2 Solid {
+        translation -0.06 0 0.05
+        rotation 0 0 1 1.5708
+        children [
+          USE WHEEL
+        ]
+        name "solid(3)"
+        boundingObject USE WHEEL
+        physics USE WHEEL_PH
+      }
+    }
+    DEF WHEEL3_JOINT HingeJoint {
+      jointParameters HingeJointParameters {
+        anchor 0.06 0 -0.05
+      }
+      device [
+        RotationalMotor {
+          name "wheel3"
+        }
+      ]
+      endPoint DEF WHEEL3 Solid {
+        translation 0.06 0 -0.05
+        rotation 0 0 1 1.5708
+        children [
+          USE WHEEL
+        ]
+        name "solid(4)"
+        boundingObject USE WHEEL
+        physics USE WHEEL_PH
+      }
+    }
+    DEF WHEEL4_JOINT HingeJoint {
+      jointParameters HingeJointParameters {
+        anchor -0.06 0 -0.05
+      }
+      device [
+        RotationalMotor {
+          name "wheel4"
+        }
+      ]
+      endPoint DEF WHEEL4 Solid {
+        translation -0.06 0 -0.05
+        rotation 0 0 1 1.5708
+        children [
+          USE WHEEL
+        ]
+        name "solid(1)"
+        boundingObject USE WHEEL
+        physics USE WHEEL_PH
+      }
+    }
+    DistanceSensor {
+      translation 0.025 0 0.1
+      rotation 0 1 0 -1.1780996938995747
+      children [
+        DEF DISTANCE_SENSOR Shape {
+          appearance PBRAppearance {
+            baseColor 0 0 1
+            metalness 0
+          }
+          geometry Box {
+            size 0.01 0.01 0.01
+          }
+        }
+      ]
+      name "ds_left"
+      boundingObject USE DISTANCE_SENSOR
+    }
+    DistanceSensor {
+      translation -0.025 0 0.1
+      rotation 0 1 0 -1.8325996938995748
+      children [
+        USE DISTANCE_SENSOR
+      ]
+      name "ds_right"
+      boundingObject USE DISTANCE_SENSOR
+    }
+  ]
+  boundingObject USE BODY
+  physics Physics {
+  }
+  controller "four_wheels_collision_avoidance"
+}

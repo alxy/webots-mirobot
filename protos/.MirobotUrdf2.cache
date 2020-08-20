@@ -1,0 +1,11 @@
+Webots Proto Cache File version 1.5
+protoFileHash: ae7d1fb76809ab556b29e075aa3b3975
+needsRobotAncestor: 1
+baseType: Robot
+slotType: 
+parameters: translation,rotation,controller,bodyMass
+tags: 
+license:  Apache License 2.0
+licenseUrl:  http://www.apache.org/licenses/LICENSE-2.0
+documentationUrl: 
+info: This\sis\sa\sproto\sfile\sfor\sWebots\sfor\sthe\sMirobotUrdf2\nExtracted\sfrom:\sF:\\Robotics\\Mirobot\\urdf2webots\\mirobot_urdf_2\\urdf\\mirobot_urdf_2.xacro\n

@@ -1,0 +1,119 @@
+#VRML_SIM R2020a utf8
+WorldInfo {
+  basicTimeStep 16
+}
+Viewpoint {
+  orientation 0.23876269354866103 0.93372606711495 0.26673583891077673 4.511362409644721
+  position -1.944238357724179 0.989387687946048 -0.20062446650775714
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+Floor {
+  size 1 1
+}
+WoodenBox {
+  translation 0.388422 0.05 0.380606
+  rotation 0 1 0 -0.785395307179586
+  size 0.1 0.1 0.1
+}
+WoodenBox {
+  translation 0.4129118357064282 0.04992151952783248 -0.09360520049604518
+  rotation -0.030185327565457866 1.689107936347631e-11 0.999544319177377 3.1415926524945905
+  name "wooden box(2)"
+  size 0.1 0.1 0.1
+  mass 0.2
+}
+WoodenBox {
+  translation -0.396681 0.05 -0.190526
+  rotation 0 1 0 0.693769
+  name "wooden box(1)"
+  size 0.1 0.1 0.1
+}
+E-puck {
+  translation 0.0530431 -7.69291e-05 0.0190064
+  rotation 0.0013145497527598507 -0.9999988119205034 -0.0008050568485851333 -0.5621753071795865
+  controller "EPuckGoForward"
+}
+Solid {
+  translation -0.081585 0.13 -0.24948
+  children [
+    Shape {
+      appearance PBRAppearance {
+        roughness 1
+        metalness 0
+      }
+      geometry DEF BALL_GEOMETRY Sphere {
+        radius 0.05
+        subdivision 2
+      }
+    }
+  ]
+  boundingObject USE BALL_GEOMETRY
+  physics Physics {
+  }
+}
+Solid {
+  translation 0.0020985 0.05 -0.495944
+  children [
+    DEF WALL_GEOMETRY Shape {
+      appearance PBRAppearance {
+        metalness 0
+      }
+      geometry Box {
+        size 1 0.1 0.01
+      }
+    }
+  ]
+  name "Wall"
+  boundingObject USE WALL_GEOMETRY
+}
+Solid {
+  translation 0.00277294 0.05 0.492781
+  rotation 0 1 0 3.14159
+  children [
+    DEF WALL_GEOMETRY Shape {
+      appearance PBRAppearance {
+        metalness 0
+      }
+      geometry Box {
+        size 1 0.1 0.01
+      }
+    }
+  ]
+  name "Wall(1)"
+  boundingObject USE WALL_GEOMETRY
+}
+Solid {
+  translation -0.492238 0.05 -0.00450913
+  rotation 0 1 0 -1.5707953071795862
+  children [
+    DEF WALL_GEOMETRY Shape {
+      appearance PBRAppearance {
+        metalness 0
+      }
+      geometry Box {
+        size 1 0.1 0.01
+      }
+    }
+  ]
+  name "Wall(3)"
+  boundingObject USE WALL_GEOMETRY
+}
+Solid {
+  translation 0.501346 0.05 0.00165469
+  rotation 0 1 0 -1.5707953071795862
+  children [
+    DEF WALL_GEOMETRY Shape {
+      appearance PBRAppearance {
+        metalness 0
+      }
+      geometry Box {
+        size 1 0.1 0.01
+      }
+    }
+  ]
+  name "Wall(2)"
+  boundingObject USE WALL_GEOMETRY
+}
