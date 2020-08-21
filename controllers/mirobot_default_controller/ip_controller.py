@@ -51,7 +51,7 @@ class IpController:
     def initialize_motors(self):
         for motorName in self.motorNames:
             motor = self.supervisor.getMotor(motorName)
-            # motor.setVelocity(1.0)
+            motor.setVelocity(0.489) # use a constant speed for all motors
             self.motors[motorName] = motor
 
     def initialize_sensors(self):
@@ -105,7 +105,7 @@ class IpController:
                 for motorName, position, speed in commands:
                     motor = self.motors[motorName]
                     motor.setPosition(position)
-                    motor.setVelocity(0.3 * speed * motor.getMaxVelocity())
+                    # motor.setVelocity(0.3 * speed * motor.getMaxVelocity())
             else:
                 if self.should_send_response:
                     self.send_response("ok")

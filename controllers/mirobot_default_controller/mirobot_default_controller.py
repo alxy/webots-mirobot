@@ -53,10 +53,10 @@ controller = IpController(supervisor, timestep=timeStep)
 controller.initialize_motors()
 controller.initialize_sensors()
 
-armChain = controller.armChain
-motors = list(controller.motors.values())
-print(motors)
-done = False
+# armChain = controller.armChain
+# motors = list(controller.motors.values())
+# print(motors)
+# done = False
 
 translation = [0.2, 0.2, 0.1]
 
