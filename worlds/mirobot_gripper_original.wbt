@@ -1,0 +1,32 @@
+#VRML_SIM R2020b utf8
+WorldInfo {
+  basicTimeStep 16
+  coordinateSystem "NUE"
+}
+Viewpoint {
+  orientation -0.07373890240005612 0.9968168504887924 0.03031073826946093 0.7822447551728668
+  position 0.853412235078819 0.18347427212692255 0.46763406301194627
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  floorSize 2 2
+  floorTileSize 0.25 0.25
+  wallHeight 0.05
+}
+WoodenBox {
+  translation 0.27 0.01 0
+  size 0.02 0.02 0.02
+  mass 0.02
+}
+Mirobot {
+  controller "mirobot_default_controller"
+  supervisor TRUE
+  toolSlot [
+    MirobotGripper {
+      rotation 0 0 1 1.5708
+    }
+  ]
+}

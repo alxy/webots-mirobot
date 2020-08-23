@@ -1,11 +1,11 @@
 Webots Proto Cache File version 1.5
-protoFileHash: 3c2f72ac63f07f4729e7d2177c195033
+protoFileHash: 5c15f9ea43a0a1af11563236754c546e
 needsRobotAncestor: 1
 baseType: Solid
 slotType: 
-parameters: translation,rotation
+parameters: translation,rotation,name
 tags: 
-license: 
-licenseUrl: 
-documentationUrl: 
-info: 
+license:  Apache License 2.0
+licenseUrl:  http://www.apache.org/licenses/LICENSE-2.0
+documentationUrl: https://www.cyberbotics.com/doc/guide/universal_robots
+info: A\s3-finger\sadaptive\srobot\sgripper\sfrom\sROBOTIQ.\n

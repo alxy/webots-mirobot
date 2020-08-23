@@ -5,28 +5,30 @@ import queue
 import re
 import numpy as np
 from ik_module import inverseKinematics
+from mirobot_gripper import MirobotGripper
 from ikpy.urdf.URDF import get_urdf_parameters
 
 class IpController:
 
-    motorNames = ['joint1', 'joint2', 'joint3', 'joint4', 'joint5', 'joint6', 'finger_joint','right_outer_knuckle_joint']
-    sensorNames = ['joint1_sensor', 'joint2_sensor', 'joint3_sensor', 'joint4_sensor', 'joint5_sensor', 'joint6_sensor', 'finger_joint_sensor','right_outer_knuckle_joint_sensor']
+    armMotorNames = ['joint1', 'joint2', 'joint3', 'joint4', 'joint5', 'joint6']
+    gripperMotorNames = ['left_outer', 'right_outer', 'right_1', 'right_2', 'left_1', 'left_2']
+    sensorNames = ['joint1_sensor', 'joint2_sensor', 'joint3_sensor', 'joint4_sensor', 'joint5_sensor', 'joint6_sensor', 'gripper_sensor']
 
     jointPositions = []
 
     motors = {}
     sensors = {}
 
-    def __init__(self, supervisor, timestep=32, host='*', port=5555):
+    def __init__(self, supervisor, host='*', port=5555):
         self.supervisor = supervisor
-        self.timestep = 32
+        self.timestep = int(supervisor.getBasicTimeStep())
         self.host = host
         self.port = port
 
         self.armChain = self.create_arm_chain()
         # self.armChain.links = self.armChain.links[:7]
         print(self.armChain)
-        self.gripper = supervisor.getFromDef('GRIPPER')
+        self.gripper = MirobotGripper(supervisor)
         # self.ik = inverseKinematics(supervisor)
 
         self.actions = queue.Queue()
@@ -49,7 +51,7 @@ class IpController:
             return None
 
     def initialize_motors(self):
-        for motorName in self.motorNames:
+        for motorName in self.armMotorNames:
             motor = self.supervisor.getMotor(motorName)
             motor.setVelocity(0.489) # use a constant speed for all motors
             self.motors[motorName] = motor
@@ -67,8 +69,7 @@ class IpController:
             file.write(self.supervisor.getUrdf().encode('utf-8'))
             
         armChain = Chain.from_urdf_file(filename)
-        armChain = Chain(armChain.links[:7])
-        print(armChain)
+        armChain = Chain(armChain.links[:7]) # only use the first 7 joints, the others belong to the gripper
 
         return armChain
 
@@ -76,11 +77,13 @@ class IpController:
         positions = []
         for sensor in self.sensors.values():
             positions.append(sensor.getValue())
+
+        gripperPositions = self.gripper.getSensors()
         
-        return positions
+        return positions + gripperPositions
 
     def get_gripper_position(self):
-        position_world = self.gripper.getPosition()
+        position_world = self.gripper.gripper_sensor.getValue() 
 
         return np.array([position_world[0], position_world[2], position_world[1]])
 
@@ -118,6 +121,8 @@ class IpController:
         else:
             # print('Moving...')
             pass
+
+        self.gripper.run() # Actuate the gripper
 
         self.jointPositions = positions # Update joint positions
 
@@ -176,7 +181,7 @@ class IpController:
             pass
 
     def home_individual(self):
-        for motorName in self.motorNames:
+        for motorName in self.armMotorNames:
             self.actions.put([(motorName, 0, 1.0)])
 
     def go_to_cartesian_lin(self, translation, orientation=[0, 0, 0], speed=1.0):
@@ -187,7 +192,7 @@ class IpController:
         ikResults = self.armChain.inverse_kinematics(translation, orientation, initial_position=ikResults, orientation_mode="Z")
         # ikResults = self.ik.get_ik(translation, orientation)
 
-        for motorName, i in zip(self.motorNames[:6], range(1, len(ikResults))):
+        for motorName, i in zip(self.armMotorNames, range(1, len(ikResults))):
             commands.append((motorName, ikResults[i], speed))
 
         self.actions.put(commands)
@@ -202,23 +207,13 @@ class IpController:
 
         ikResults = self.armChain.inverse_kinematics(target_position, orientation, orientation_mode="Z")
 
-        for motorName, i in zip(self.motorNames[:6], range(1, len(ikResults))):
+        for motorName, i in zip(self.armMotorNames, range(1, len(ikResults))):
             commands.append((motorName, ikResults[i], speed))
 
         self.actions.put(commands)
 
     def open_gripper(self):
-        commands = [
-            ('finger_joint', 0, 1.0),
-            ('right_outer_knuckle_joint', 0, 1.0)
-        ]
-
-        self.actions.put(commands)
+        self.gripper.open()
 
     def close_gripper(self):
-        commands = [
-            ('finger_joint', 0.4, 1.0),
-            ('right_outer_knuckle_joint', 0.4, 1.0)
-        ]
-
-        self.actions.put(commands)
+        self.gripper.close()

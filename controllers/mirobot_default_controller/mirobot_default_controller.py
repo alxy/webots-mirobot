@@ -41,7 +41,7 @@ timeStep = int(4 * supervisor.getBasicTimeStep())
 # effector = supervisor.getFromDef('EFFECTOR')
 # robot = Robot()  
 # 
-gripper = supervisor.getFromDef('GRIPPER')
+# gripper = supervisor.getFromDef('GRIPPER')
 # Start the zmq server
 # 
 # context = zmq.Context()
@@ -49,7 +49,7 @@ gripper = supervisor.getFromDef('GRIPPER')
 # socket.bind("tcp://*:5555")
 # print('Server started...')
 
-controller = IpController(supervisor, timestep=timeStep)  
+controller = IpController(supervisor)  
 controller.initialize_motors()
 controller.initialize_sensors()
 
