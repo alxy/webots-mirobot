@@ -13,9 +13,11 @@ with Mirobot(portname='COM3', connection_type='ip', debug=True) as m:
 
     # m.go_to_zero()
 
+    m.set_valve(40) # open
+
     m.set_valve(65)
 
-    # m.set_valve(40) # open
+    
 
     # m.set_valve(65) # close to grab the blue box
     # time.sleep(1)

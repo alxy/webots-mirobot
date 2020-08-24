@@ -212,11 +212,15 @@ PROTO MirobotGripper [
                                 ]
                                 name "gripper_right"
                                 boundingObject USE gripper_right
+                                physics Physics {
+                                }
                               }
                             }
                           ]
                           name "link_right"
                           boundingObject USE link_right
+                          physics Physics {
+                          }
                         }
                       }
                       HingeJoint {
@@ -298,11 +302,15 @@ PROTO MirobotGripper [
                                 ]
                                 name "gripper_left"
                                 boundingObject USE gripper_left
+                                physics Physics {
+                                }
                               }
                             }
                           ]
                           name "link_left"
                           boundingObject USE link_left
+                          physics Physics {
+                          }
                         }
                       }
                       Solid {
@@ -328,6 +336,8 @@ PROTO MirobotGripper [
                         ]
                         name "motor_box"
                         boundingObject USE motor_box
+                        physics Physics {
+                        }
                       }
                       DEF palm Shape {
                         appearance USE BLACK_METAL
@@ -350,6 +360,8 @@ PROTO MirobotGripper [
                     ]
                     name "palm"
                     boundingObject USE palm
+                    physics Physics {
+                    }
                   }
                 }
                 DEF wrist Shape {

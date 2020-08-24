@@ -102,6 +102,7 @@ class IpController:
         # print(positions)
 
         if not self.is_busy(positions):
+
             if not self.actions.empty():
                 commands = self.actions.get()
 
