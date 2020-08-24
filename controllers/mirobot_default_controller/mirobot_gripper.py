@@ -67,9 +67,9 @@ class MirobotGripper():
     # have to call this functions several times for it to reach the new location        
     def gripperMoveIncrement(self, pos_end, maxTorque, increment_rad=0.05):
         pos = pos_start = self.gripper_sensor.getValue() 
-        # if pos_start < pos_end: # if we are opening the gripper, we ignore the torque, as it can get stuck otherwise
-        #     self.gripperPosition(pos_end)
-        #     return     
+        if pos_start < pos_end: # if we are opening the gripper, we ignore the torque, as it can get stuck otherwise
+            self.gripperPosition(pos_end)
+            return     
         # following 2 lines take your increment_rad and change it slightly, so that we reach the goal exactly   
         intervals = ceil(abs((pos_end - pos_start) / increment_rad)) 
         # print("Intervals: {}, pos_start={}, pos_end={}".format(intervals, pos_start, pos_end))
