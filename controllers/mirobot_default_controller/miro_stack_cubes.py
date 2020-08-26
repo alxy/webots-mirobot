@@ -1,0 +1,48 @@
+from mirobot import Mirobot
+import time
+
+# first = [0.27, 0, 0.030]
+# second = [0.200, 0, 0.150]
+# controller.open_gripper()
+# controller.go_to_cartesian_lin(first)
+# controller.close_gripper()
+# controller.go_to_cartesian_lin(second)
+
+with Mirobot(portname='COM3', connection_type='ip', debug=True) as m:
+    # m.home_individual()
+    # m.go_to_zero()
+
+    # first cube
+    m.set_valve(40) # open
+    m.go_to_cartesian_lin(x=260, y=0, z=100, a=0.000, b=0.000, c=0.000)
+
+    m.set_valve(65) # close
+
+    m.go_to_cartesian_lin(x=260, y=0, z=150, a=0.000, b=0.000, c=0.000)
+    m.go_to_cartesian_lin(x=200, y=100, z=110, a=0.000, b=0.000, c=0.000)
+
+    m.set_valve(40) # open
+
+    # second cube
+    m.go_to_cartesian_lin(x=200, y=100, z=150, a=0.000, b=0.000, c=0.000)
+
+    m.go_to_cartesian_lin(x=200, y=0, z=150, a=0.000, b=0.000, c=0.000)
+    m.go_to_cartesian_lin(x=220, y=0, z=100, a=0.000, b=0.000, c=0.000)
+
+    m.set_valve(65) # close
+
+    m.go_to_cartesian_lin(x=200, y=100, z=130, a=0.000, b=0.000, c=0.000)
+    m.set_valve(40) # open
+    
+
+    m.go_to_cartesian_lin(x=200, y=100, z=180, a=0.000, b=0.000, c=0.000)
+
+    m.go_to_cartesian_lin(x=200, y=0, z=180, a=0.000, b=0.000, c=0.000)
+
+    m.set_valve(65) # close
+
+    
+
+    
+
+    print('finished')
