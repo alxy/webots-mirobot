@@ -7,6 +7,7 @@ import numpy as np
 from ik_module import inverseKinematics
 from mirobot_gripper import MirobotGripper
 from ikpy.urdf.URDF import get_urdf_parameters
+from scipy.spatial.transform import Rotation as R
 
 class IpController:
 
@@ -187,10 +188,11 @@ class IpController:
 
     def go_to_cartesian_lin(self, translation, orientation=[0, 0, 0], speed=1.0):
         commands = []
-        orientation = [0, 0, 1]
+        # orientation = [0, 0, 1]
         # orientation = np.eye(3)
-        ikResults = self.armChain.inverse_kinematics(translation)
-        ikResults = self.armChain.inverse_kinematics(translation, orientation, initial_position=ikResults, orientation_mode="Z")
+        orientation = R.from_euler('xyz', orientation, degrees=True).as_matrix()
+        # ikResults = self.armChain.inverse_kinematics(translation)
+        ikResults = self.armChain.inverse_kinematics(translation, orientation, orientation_mode="all")
         # ikResults = self.ik.get_ik(translation, orientation)
 
         for motorName, i in zip(self.armMotorNames, range(1, len(ikResults))):

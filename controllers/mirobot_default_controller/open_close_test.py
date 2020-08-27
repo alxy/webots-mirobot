@@ -13,9 +13,11 @@ with Mirobot(portname='COM3', connection_type='ip', debug=True) as m:
 
     # m.go_to_zero()
 
-    m.set_valve(40) # open
+    # m.set_valve(40) # open
 
-    m.set_valve(65)
+    m.go_to_cartesian_lin(x=200, y=0, z=150, a=0.000, b=0.000, c=0)
+
+    # m.set_valve(65)
 
     
 
